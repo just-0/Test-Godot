@@ -1,0 +1,80 @@
+[gd_scene load_steps=8 format=3 uid="uid://r2rqunnhbi7e"]
+
+[ext_resource type="Script" path="res://Scripts/player.gd" id="1_o6qdq"]
+[ext_resource type="Texture2D" uid="uid://dv3nhwhuy6gde" path="res://Rocky Roads/Enemies/slime_blue.png" id="1_y17wo"]
+
+[sub_resource type="Animation" id="Animation_44iu3"]
+resource_name = "Idle"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_p6p3i"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_majp8"]
+resource_name = "Walk"
+length = 0.9
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_rmyqx"]
+_data = {
+"Idle": SubResource("Animation_44iu3"),
+"RESET": SubResource("Animation_p6p3i"),
+"Walk": SubResource("Animation_majp8")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_w5s1y"]
+size = Vector2(16, 10)
+
+[node name="Player" type="CharacterBody2D"]
+script = ExtResource("1_o6qdq")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_y17wo")
+hframes = 5
+vframes = 2
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_rmyqx")
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+light_mask = 3
+visibility_layer = 3
+position = Vector2(0, 3)
+shape = SubResource("RectangleShape2D_w5s1y")
